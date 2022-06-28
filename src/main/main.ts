@@ -31,6 +31,17 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
+ipcMain.on('close-app', async () => {
+  if (mainWindow) {
+    mainWindow.close();
+  }
+});
+ipcMain.on('min-app', async () => {
+  if (mainWindow) {
+    mainWindow.minimize();
+  }
+});
+
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();

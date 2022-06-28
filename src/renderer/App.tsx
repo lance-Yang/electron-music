@@ -27,12 +27,22 @@ const LoginPage = () => {
     navigate('/home');
   };
 
+  const handleMiniApp = () => {
+    window.electron.ipcRenderer.sendMessage('min-app', []);
+    setIsFocus(false);
+  };
+
+  const handleCloseApp = () => {
+    window.electron.ipcRenderer.sendMessage('close-app', []);
+    setIsFocus(false);
+  };
+
   return (
     <div className="container">
       <div className="header">
         {/* <Space> */}
-        <MinusOutlined className="narrow" />
-        <CloseOutlined className="closeIcon" />
+        <MinusOutlined className="narrow" onClick={handleMiniApp} />
+        <CloseOutlined className="closeIcon" onClick={handleCloseApp} />
         {/* </Space> */}
       </div>
       <div className="login-box">
