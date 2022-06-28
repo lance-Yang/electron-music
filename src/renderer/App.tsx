@@ -1,39 +1,68 @@
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
+import { useState } from 'react';
+import {
+  MemoryRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from 'react-router-dom';
+// import { Space } from 'antd';
+import { CloseOutlined, MinusOutlined } from '@ant-design/icons';
+import cls from 'classnames';
 import './App.css';
 
-const Hello = () => {
+// import HomePage from './home';
+
+const LoginPage = () => {
+  const [isFocus, setIsFocus] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const handleFocus = () => {
+    setIsFocus(true);
+  };
+  const handleBlur = () => {
+    setIsFocus(false);
+  };
+
+  const handleLogin = () => {
+    navigate('/home');
+  };
+
   return (
-    <div>
-      <div className="Hello">
-        <img width="200px" alt="icon" src={icon} />
+    <div className="container">
+      <div className="header">
+        {/* <Space> */}
+        <MinusOutlined className="narrow" />
+        <CloseOutlined className="closeIcon" />
+        {/* </Space> */}
       </div>
-      <h1>electron-react-boilerplate</h1>
-      <div className="Hello">
-        <a
-          href="https://electron-react-boilerplate.js.org/"
-          target="_blank"
-          rel="noreferrer"
+      <div className="login-box">
+        <div
+          className={cls('owl', {
+            // eslint-disable-next-line no-useless-computed-key
+            ['password']: isFocus,
+          })}
+          id="owl"
         >
-          <button type="button">
-            <span role="img" aria-label="books">
-              📚
-            </span>
-            Read our docs
+          <div className="hand" />
+          <div className="hand hand-r" />
+          <div className="arms">
+            <div className="arm" />
+            <div className="arm arm-r" />
+          </div>
+        </div>
+        <div className="input-box">
+          <input type="text" placeholder="账号" />
+          <input
+            type="password"
+            placeholder="密码"
+            id="password"
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+          />
+          <button type="button" onClick={handleLogin}>
+            登录
           </button>
-        </a>
-        <a
-          href="https://github.com/sponsors/electron-react-boilerplate"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              🙏
-            </span>
-            Donate
-          </button>
-        </a>
+        </div>
       </div>
     </div>
   );
@@ -43,7 +72,8 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Hello />} />
+        <Route path="/" element={<LoginPage />} />
+        {/* <Route path="/home" element={<HomePage />} /> */}
       </Routes>
     </Router>
   );
